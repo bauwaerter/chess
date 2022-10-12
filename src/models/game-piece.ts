@@ -27,6 +27,7 @@ export abstract class GamePiece {
   private _team: Team;
   private _symbol: string;
   private _position: Position;
+  private _numMoves = 0;
 
   constructor({ name, team, symbol, position }: Props) {
     this._name = name;
@@ -55,5 +56,13 @@ export abstract class GamePiece {
     this._position = position;
   }
 
-  abstract getValidMoves(): Position[];
+  get numMoves(): number {
+    return this._numMoves;
+  }
+
+  set numMoves(numMoves: number) {
+    this._numMoves = numMoves;
+  }
+
+  abstract getValidMoves(boardState: GamePiece[]): Position[];
 }

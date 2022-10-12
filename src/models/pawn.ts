@@ -12,12 +12,18 @@ export class Pawn extends GamePiece {
     });
   }
 
-  getValidMoves() {
+  getValidMoves(boardState: GamePiece[]): Position[] {
     const moves = [];
 
     if (this.team === Team.White) {
+      if (this.numMoves === 0) {
+        moves.push({ row: this.position.row + 2, col: this.position.col });
+      }
       moves.push({ row: this.position.row + 1, col: this.position.col });
     } else {
+      if (this.numMoves === 0) {
+        moves.push({ row: this.position.row - 2, col: this.position.col });
+      }
       moves.push({ row: this.position.row - 1, col: this.position.col });
     }
 

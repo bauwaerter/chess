@@ -69,6 +69,7 @@ export const useGameStore = create<State>()((set, get) => ({
     const newBoardState = boardState.map((piece) => {
       if (selectedPiece && piece === selectedPiece) {
         piece.position = position;
+        piece.numMoves++;
       }
       return piece;
     });

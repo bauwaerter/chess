@@ -30,7 +30,7 @@ export const BoardCell: React.FC<Props> = ({ row, column }) => {
     );
   }
 
-  const moves = selectedPiece?.getValidMoves();
+  const moves = selectedPiece?.getValidMoves(boardState);
 
   const isActiveTeam = activePiece && activePiece.team === team;
   const isSelectedPiece =
