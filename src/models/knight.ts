@@ -1,6 +1,7 @@
 import { GamePiece, Position, Team } from "./game-piece";
 import knightWhite from "../assets/white/knight.png";
 import knightBlack from "../assets/black/knight.png";
+import { Game } from "../entities/game";
 
 export class Knight extends GamePiece {
   constructor(team: Team, position: Position) {
@@ -12,7 +13,7 @@ export class Knight extends GamePiece {
     });
   }
 
-  getValidMoves() {
+  getValidMoves(game: Game): Position[] {
     const moves = [];
 
     for (let i = 1; i < 8; i++) {

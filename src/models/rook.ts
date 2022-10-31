@@ -1,11 +1,7 @@
 import { GamePiece, Position, Team } from "./game-piece";
 import rookWhite from "../assets/white/rook.png";
 import rookBlack from "../assets/black/rook.png";
-
-interface RookProps {
-  team: Team;
-  currentPosition: number[];
-}
+import { Game } from "../entities/game";
 
 export class Rook extends GamePiece {
   constructor(team: Team, position: Position) {
@@ -17,7 +13,7 @@ export class Rook extends GamePiece {
     });
   }
 
-  getValidMoves() {
+  getValidMoves(game: Game): Position[] {
     const moves = [];
 
     for (let i = 1; i < 8; i++) {

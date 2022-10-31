@@ -1,6 +1,7 @@
 import { GamePiece, Position, Team } from "./game-piece";
 import queenWhite from "../assets/white/queen.png";
 import queenBlack from "../assets/black/queen.png";
+import { Game } from "../entities/game";
 
 export class Queen extends GamePiece {
   constructor(team: Team, position: Position) {
@@ -12,7 +13,7 @@ export class Queen extends GamePiece {
     });
   }
 
-  getValidMoves() {
+  getValidMoves(game: Game): Position[] {
     const moves = [];
 
     for (let i = 1; i < 8; i++) {

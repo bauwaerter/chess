@@ -12,10 +12,9 @@ interface Props {
 }
 
 export const BoardCell: React.FC<Props> = ({ row, column }) => {
-  const { boardState, team, selectedPiece, setSelectedPiece, movePiece } =
-    useGameStore();
+  const { game, selectedPiece, setSelectedPiece, movePiece } = useGameStore();
   const isBlack = (row.index + column.index) % 2 === 0;
-  const activePiece = boardState.find(
+  const activePiece = game.activeGamePieces.find(
     (piece) =>
       piece.position.row === row.index && piece.position.col === column.index
   );
@@ -30,9 +29,9 @@ export const BoardCell: React.FC<Props> = ({ row, column }) => {
     );
   }
 
-  const moves = selectedPiece?.getValidMoves(boardState);
+  const moves = selectedPiece?.getValidMoves(game);
 
-  const isActiveTeam = activePiece && activePiece.team === team;
+  const isActiveTeam = activePiece && activePiece.team === game.currentTeam;
   const isSelectedPiece =
     selectedPiece?.position.col === column.index &&
     selectedPiece?.position.row === row.index;
@@ -42,7 +41,7 @@ export const BoardCell: React.FC<Props> = ({ row, column }) => {
   );
 
   const handleCellClick = () => {
-    if (activePiece && activePiece.team === team) {
+    if (activePiece && activePiece.team === game.currentTeam) {
       setSelectedPiece(activePiece);
       return;
     }
