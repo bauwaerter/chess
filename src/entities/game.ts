@@ -50,8 +50,16 @@ export class Game {
     return this._activeGamePieces;
   }
 
+  set activeGamePieces(gamePieces: GamePiece[]) {
+    this._activeGamePieces = gamePieces;
+  }
+
   get inActiveGamePieces(): GamePiece[] {
     return this._inActiveGamePieces;
+  }
+
+  set inActiveGamePieces(gamePieces: GamePiece[]) {
+    this._inActiveGamePieces = gamePieces;
   }
 
   get moves(): Move[] {
@@ -66,12 +74,23 @@ export class Game {
     this._currentTeam = team;
   }
 
+  private switchTeam(): void {
+    this.currentTeam =
+      this.currentTeam === Team.White ? Team.Black : Team.White;
+  }
+
   movePiece(piece: GamePiece, to: Position): void {
+    const opponentPiece = this.getGamePieceAtPosition(to);
+    if (opponentPiece && opponentPiece.team !== piece.team) {
+      this.inActiveGamePieces = [...this.inActiveGamePieces, opponentPiece];
+      this.activeGamePieces = this.activeGamePieces.filter(
+        (piece) => piece !== opponentPiece
+      );
+    }
     const from = piece.position;
     this._moves.push({ piece, from, to });
     piece.position = to;
-    this.currentTeam =
-      this.currentTeam === Team.White ? Team.Black : Team.White;
+    this.switchTeam();
   }
 
   getGamePieceAtPosition(position: Position): GamePiece | undefined {

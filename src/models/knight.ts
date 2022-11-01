@@ -13,16 +13,31 @@ export class Knight extends GamePiece {
     });
   }
 
-  getValidMoves(game: Game): Position[] {
+  getMoves(): Position[] {
     const moves = [];
 
-    for (let i = 1; i < 8; i++) {
-      moves.push({ row: this.position.row + i, col: this.position.col + i });
-      moves.push({ row: this.position.row - i, col: this.position.col + i });
-      moves.push({ row: this.position.row + i, col: this.position.col - i });
-      moves.push({ row: this.position.row - i, col: this.position.col - i });
-    }
+    moves.push({ row: this.position.row + 2, col: this.position.col + 1 });
+    moves.push({ row: this.position.row + 2, col: this.position.col - 1 });
+    moves.push({ row: this.position.row - 2, col: this.position.col + 1 });
+    moves.push({ row: this.position.row - 2, col: this.position.col - 1 });
+
+    moves.push({ row: this.position.row + 1, col: this.position.col + 2 });
+    moves.push({ row: this.position.row + 1, col: this.position.col - 2 });
+    moves.push({ row: this.position.row - 1, col: this.position.col + 2 });
+    moves.push({ row: this.position.row - 1, col: this.position.col - 2 });
 
     return moves;
+  }
+
+  getValidMoves(game: Game): Position[] {
+    const moves = this.getMoves();
+    const validMoves = moves.filter((move) => {
+      const piece = game.getGamePieceAtPosition(move);
+      if (piece) {
+        return piece.team !== this.team;
+      }
+      return true;
+    });
+    return validMoves;
   }
 }

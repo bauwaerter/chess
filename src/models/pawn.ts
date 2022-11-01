@@ -13,61 +13,44 @@ export class Pawn extends GamePiece {
     });
   }
 
-  private getMoves(game: Game): Position[] {
+  getMoves(): Position[] {
     const moves = [];
 
-    const isFirstMove = game.moves.find((p) => p.piece === this) === undefined;
     const direction = this.team === Team.White ? 1 : -1;
-    if (isFirstMove) {
-      moves.push({
-        row: this.position.row + direction * 2,
-        col: this.position.col,
-      });
-    }
-    moves.push({ row: this.position.row + direction, col: this.position.col });
 
-    const opponentActiveGamePieces = game.getOpponentActiveGamePieces(
-      this.team
-    );
-    if (
-      opponentActiveGamePieces.find(
-        (p) =>
-          p.position.row === this.position.row + direction &&
-          p.position.col === this.position.col + 1
-      )
-    ) {
-      moves.push({
-        row: this.position.row + direction,
-        col: this.position.col + 1,
-      });
-    }
-    if (
-      opponentActiveGamePieces.find(
-        (p) =>
-          p.position.row === this.position.row + direction &&
-          p.position.col === this.position.col - 1
-      )
-    ) {
-      moves.push({
-        row: this.position.row + direction,
-        col: this.position.col - 1,
-      });
-    }
+    moves.push({
+      row: this.position.row + direction * 2,
+      col: this.position.col,
+    });
+    moves.push({ row: this.position.row + direction, col: this.position.col });
+    moves.push({
+      row: this.position.row + direction,
+      col: this.position.col + 1,
+    });
+    moves.push({
+      row: this.position.row + direction,
+      col: this.position.col - 1,
+    });
 
     return moves;
   }
 
   getValidMoves(game: Game): Position[] {
-    const moves = this.getMoves(game);
+    const moves = this.getMoves();
 
-    moves.filter((move) => {
-      const piece = game.getGamePieceAtPosition(move);
-      if (piece) {
-        return false;
-      }
+    const isFirstMove = game.moves.find((p) => p.piece === this) === undefined;
+
+    const opponentActiveGamePieces = game.getOpponentActiveGamePieces(
+      this.team
+    );
+    const validMoves = moves.filter((move) => {
+      // if (isFirstMove) const piece = game.getGamePieceAtPosition(move);
+      // if (piece) {
+      //   return false;
+      // }
       return true;
     });
 
-    return moves;
+    return validMoves;
   }
 }

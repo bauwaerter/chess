@@ -24,7 +24,6 @@ interface State {
 
 export const useGameStore = create<State>()((set, get) => ({
   ...initialState,
-  selectedPiece: null,
   setSelectedPiece: (piece: GamePiece) => set({ selectedPiece: piece }),
   movePiece: (position: Position) => {
     const { game, selectedPiece } = get();

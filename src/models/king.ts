@@ -13,7 +13,7 @@ export class King extends GamePiece {
     });
   }
 
-  getValidMoves(game: Game): Position[] {
+  getMoves(): Position[] {
     const moves = [];
 
     for (let i = 1; i < 8; i++) {
@@ -22,6 +22,12 @@ export class King extends GamePiece {
       moves.push({ row: this.position.row + i, col: this.position.col - i });
       moves.push({ row: this.position.row - i, col: this.position.col - i });
     }
+
+    return moves;
+  }
+
+  getValidMoves(game: Game): Position[] {
+    const moves = this.getMoves();
 
     return moves;
   }

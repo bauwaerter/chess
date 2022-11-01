@@ -57,5 +57,6 @@ export abstract class GamePiece {
     this._position = position;
   }
 
+  abstract getMoves(): Position[];
   abstract getValidMoves(game: Game): Position[];
 }
